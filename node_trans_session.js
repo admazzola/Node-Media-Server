@@ -3,6 +3,10 @@
 //  illuspas[a]gmail.com
 //  Copyright (c) 2018 Nodemedia. All rights reserved.
 //
+
+var SHA256 = require("crypto-js/sha256");;
+
+
 const Logger = require('./node_core_logger');
 
 const EventEmitter = require('events');
@@ -18,11 +22,18 @@ class NodeTransSession extends EventEmitter {
   }
 
   run() {
+
+    if (this.conf.useHashedNames) {
+      this.conf.streamName = SHA256(this.conf.streamName)
+    }
+
+
     let vc = this.conf.vc || 'copy';
     let ac = this.conf.ac || 'copy';
     let inPath = 'rtmp://127.0.0.1:' + this.conf.rtmpPort + this.conf.streamPath;
     let ouPath = `${this.conf.mediaroot}/${this.conf.streamApp}/${this.conf.streamName}`;
     let mapStr = '';
+
 
     if (this.conf.rtmp && this.conf.rtmpApp) {
       if (this.conf.rtmpApp === this.conf.streamApp) {
