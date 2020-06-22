@@ -9,6 +9,8 @@ var SHA256 = require("crypto-js/sha256");;
 
 const Logger = require('./node_core_logger');
 
+const context = require('./node_core_ctx');
+
 const EventEmitter = require('events');
 const { spawn } = require('child_process');
 const dateFormat = require('dateformat');
@@ -50,6 +52,7 @@ class NodeTransSession extends EventEmitter {
       let mapMp4 = `${this.conf.mp4Flags}${ouPath}/${mp4FileName}|`;
       mapStr += mapMp4;
       Logger.log('[Transmuxing MP4] ' + this.conf.streamPath + ' to ' + ouPath + '/' + mp4FileName);
+      context.nodeEvent.on('savedRecording', this.onSavedRecording.bind(this));
     }
     if (this.conf.hls) {
       this.conf.hlsFlags = this.conf.hlsFlags ? this.conf.hlsFlags : '';
@@ -104,6 +107,11 @@ class NodeTransSession extends EventEmitter {
       });
     });
   }
+
+  onSavedRecording(id, streamPath, args) {
+
+  }
+
 
   end() {
     // this.ffmpeg_exec.kill();
