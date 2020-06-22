@@ -52,7 +52,10 @@ class NodeTransSession extends EventEmitter {
       let mapMp4 = `${this.conf.mp4Flags}${ouPath}/${mp4FileName}|`;
       mapStr += mapMp4;
       Logger.log('[Transmuxing MP4] ' + this.conf.streamPath + ' to ' + ouPath + '/' + mp4FileName);
-      context.nodeEvent.on('savedRecording', this.onSavedRecording.bind(this));
+
+
+      let args = {mp4FileName: mp4FileName}
+      context.nodeEvent.emit('savedRecording', this.conf.id, this.conf.streamPath, args);
     }
     if (this.conf.hls) {
       this.conf.hlsFlags = this.conf.hlsFlags ? this.conf.hlsFlags : '';
