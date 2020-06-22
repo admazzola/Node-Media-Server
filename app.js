@@ -54,6 +54,12 @@ nms.on('prePublish', (id, StreamPath, args) => {
   // session.reject();
 });
 
+nms.on('savedRecording', (id, StreamPath, args) => {
+  console.log('[NodeEvent on savedRecording]', `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`);
+  // let session = nms.getSession(id);
+  // session.reject();
+});
+
 nms.on('postPublish', (id, StreamPath, args) => {
   console.log('[NodeEvent on postPublish]', `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`);
 });
@@ -75,4 +81,3 @@ nms.on('postPlay', (id, StreamPath, args) => {
 nms.on('donePlay', (id, StreamPath, args) => {
   console.log('[NodeEvent on donePlay]', `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`);
 });
-
