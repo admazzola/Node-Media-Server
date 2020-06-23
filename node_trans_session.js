@@ -50,12 +50,13 @@ class NodeTransSession extends EventEmitter {
       this.conf.mp4Flags = this.conf.mp4Flags ? this.conf.mp4Flags : '';
       let mp4FileName = dateFormat('yyyy-mm-dd-HH-MM') + '.mp4';
 
-      console.log('meep conf is ', this.conf)
+      
       let mp4OutPath = `${this.conf.mp4FileRoot}/recordings/${this.conf.streamName}`;
       let mapMp4 = `${this.conf.mp4Flags}${mp4OutPath}/${mp4FileName}|`;
       mapStr += mapMp4;
       Logger.log('[Transmuxing MP4] ' + this.conf.streamPath + ' to ' + mp4OutPath + '/' + mp4FileName);
 
+      mkdirp.sync(mp4OutPath);
 
       let args = {mp4FileName: mp4FileName}
       context.nodeEvent.emit('savedRecording', this.conf.id, this.conf.streamPath, args);
@@ -75,6 +76,10 @@ class NodeTransSession extends EventEmitter {
       Logger.log('[Transmuxing DASH] ' + this.conf.streamPath + ' to ' + ouPath + '/' + dashFileName);
     }
     mkdirp.sync(ouPath);
+    m
+
+
+
     let argv = ['-y', '-fflags', 'nobuffer', '-i', inPath];
     Array.prototype.push.apply(argv, ['-c:v', vc]);
     Array.prototype.push.apply(argv, this.conf.vcParam);
