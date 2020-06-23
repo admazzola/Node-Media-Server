@@ -50,7 +50,7 @@ class NodeTransSession extends EventEmitter {
       this.conf.mp4Flags = this.conf.mp4Flags ? this.conf.mp4Flags : '';
       let mp4FileName = dateFormat('yyyy-mm-dd-HH-MM') + '.mp4';
 
-       
+
       let mp4OutPath = `${this.conf.mp4FileRoot}/recordings/${this.conf.streamName}`;
       let mapMp4 = `${this.conf.mp4Flags}${mp4OutPath}/${mp4FileName}|`;
       mapStr += mapMp4;
@@ -80,6 +80,7 @@ class NodeTransSession extends EventEmitter {
     Array.prototype.push.apply(argv, this.conf.vcParam);
     Array.prototype.push.apply(argv, ['-c:a', ac]);
     Array.prototype.push.apply(argv, this.conf.acParam);
+    Array.prototype.push.apply(argv, ['-crf','28']);
     Array.prototype.push.apply(argv, ['-f', 'tee', '-map', '0:a?', '-map', '0:v?', mapStr]);
     argv = argv.filter((n) => { return n }); //去空
     this.ffmpeg_exec = spawn(this.conf.ffmpeg, argv);
