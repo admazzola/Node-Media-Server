@@ -61,6 +61,7 @@ class NodeTransServer {
       conf.ffmpeg = this.config.trans.ffmpeg;
       conf.mediaroot = this.config.http.mediaroot;
       conf.rtmpPort = this.config.rtmp.port;
+      conf.mp4FileRoot = this.config.trans.mp4FileRoot;
       conf.streamPath = streamPath;
       conf.streamApp = app;
       conf.streamName = name;
